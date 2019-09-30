@@ -30,9 +30,9 @@ for episode in range(epochs):
         state = state2
 
     if (episode+1)%20==0:
-        print('Episode {}: Total Reward: {}'.format(episode+1, G))
+        print('Episode {}: Total Reward: {}'.format(episode+1, G)) # printing total rewards after 20 episodes
 
-print("Training Finished for {} epochs.".format(episode+1))
+print("Training finished after {} epochs.".format(episode+1))
 
 # Evaluating the agents performance after Q_learning
 epochs = 100
