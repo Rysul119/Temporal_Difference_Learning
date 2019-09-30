@@ -36,7 +36,7 @@ for episode in range(epochs):
 
 print("Training Finished for {} epochs.".format(episode + 1))
 
-# Evaluating the agents performance after Q_learning
+# Evaluating the agents performance after the implementation of SARSA
 epochs = 100
 for episode in range(epochs):
     G = 0  # to sum up total reward
