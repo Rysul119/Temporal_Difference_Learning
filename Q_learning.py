@@ -15,7 +15,8 @@ def eps_greedy_action(q_values, epsilon):
         return env.action_space.sample()  # returning a random action if a random value [0,1] is less than epsilon
     else:
         return np.argmax(q_values)
-
+    
+# Training the agent using Q_learning algorithm
 for episode in range(epochs):
     G = 0  # to sum up total reward
     reward = 0
@@ -34,7 +35,7 @@ for episode in range(epochs):
 
 print("Training finished after {} epochs.".format(episode+1))
 
-# Evaluating the agents performance after Q_learning
+# Evaluating the agent performance after Q_learning
 epochs = 100
 for episode in range(epochs):
     G = 0  # to sum up total reward
