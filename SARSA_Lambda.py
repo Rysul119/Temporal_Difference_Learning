@@ -49,12 +49,21 @@ for episode in range(epochs):
     reward = 0
     done = False
     state = env.reset()
+    frames = []
+    t = 0
 
     while not done:
         action = np.argmax(Q[state])  # taking a greedy action for agent evaluation
         next_state, reward, done, info = env.step(action)
         G += reward
+        clear_output()
+        frames.append(env.render())
+        print(f'Episode: {episode + 1}')
+        print(f'Timestep: {t + 1}')
+        print(f'State: {next_state}')
+        print(f'Action: {action}')
+        print(f'Reward: {reward}')
+        print(f'Total Reward: {G}')
+        sleep(.3)
+        t += 1
         state = next_state
-
-    if (episode+1)%10==0:
-        print('Episode {}: Total Reward: {}'.format(episode+1, G))
