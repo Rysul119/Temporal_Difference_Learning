@@ -36,19 +36,28 @@ for episode in range(epochs):
 
 print("Training Finished for {} epochs.".format(episode + 1))
 
-# Evaluating the agents performance after the implementation of SARSA
+# Evaluating the agents performance after implementing SARSA
 epochs = 100
 for episode in range(epochs):
     G = 0  # to sum up total reward
     reward = 0
     done = False
     state = env.reset()
+    frames = []
+    t = 0
 
     while not done:
         action = np.argmax(Q[state])  # taking a greedy action for agent evaluation
         state2, reward, done, info = env.step(action)
         G += reward
+        clear_output()
+        frames.append(env.render())
+        print(f'Episode: {episode + 1}')
+        print(f'Timestep: {t + 1}')
+        print(f'State: {state2}')
+        print(f'Action: {action}')
+        print(f'Reward: {reward}')
+        print(f'Total Reward: {G}')
+        sleep(.3)
+        t += 1
         state = state2
-
-    if (episode+1)%10==0:
-        print('Episode {}: Total Reward: {}'.format(episode+1, G))
