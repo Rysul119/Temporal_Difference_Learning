@@ -12,7 +12,6 @@ lmda = 0.95
 alpha =  0.05 # actor learning rate
 beta = 0.04 # critic learning rate
 batch_size = 60
-epochs = 200
 ppo_steps = 200
 clip_coeff = 0.2
 
