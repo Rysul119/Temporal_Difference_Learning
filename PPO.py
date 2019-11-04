@@ -137,8 +137,8 @@ for episode in range(epochs):
         action_prob = actor.predict(state)
         q_value = critic.predict(state)
         action = int(np.random.choice(action_space, 1, p = action_prob[0]))
-        action_onehot = np.zeros(action_size)
-        action_onehot[action] = 1
+        #action_onehot = np.zeros(action_size)
+        #action_onehot[action] = 1
 
         next_state, reward, done, info = env.step(action)
         mask = not done
@@ -149,7 +149,7 @@ for episode in range(epochs):
         values.append(q_value)
         masks.append(mask)
         action_probs.append(action_prob)
-        action_onehots.append(action_onehot)
+        #action_onehots.append(action_onehot)
 
         state = next_state
         state = np.reshape(state, (1, -1))
