@@ -4,15 +4,18 @@ import tensorflow as tf
 import os
 import random
 from collections import  deque
+import matplotlib.pyplot as plt
+
 tf.keras.backend.set_floatx('float64')
 env = gym.make('CartPole-v1')
-
+env.seed(1)
+np.random.seed(2)
 gamma = 0.9 # discounting factor [0,1]
 epsilon = 0.4  # within [0,1]
 alpha =  0.001 # actor learning rate
 beta = 0.02 # critic learning rate
 batch_size = 60
-epochs = 200
+epochs = 10000
 train_epochs = 1
 tau = 0.01 # soft update
 memory = deque(maxlen=2000)
@@ -73,7 +76,8 @@ def Action_choice(model, state, epsilon):
     if np.random.random() < epsilon:
         choice = env.action_space.sample()
     else:
-        choice = int(np.random.choice(action_space, 1, p=action_prob))
+        #choice = int(np.random.choice(action_space, 1, p=action_prob))
+        choice = np.argmax(action_prob)
 
     return choice, action_prob
 
@@ -144,7 +148,8 @@ for params, target_params in zip(critic.trainable_variables, critic_target.train
 for params, target_params in zip(actor.trainable_variables, actor_target.trainable_variables):
     target_params.assign(params)
 
-
+score =[]
+avg_scores = []
 for episode in range(epochs):
     G = 0
     reward = 0
@@ -166,13 +171,23 @@ for episode in range(epochs):
         G += reward
         state = next_state
 
+    score.append(G)
+    if (episode + 1) % 10 == 0:
+        avg_score = np.sum(score[-10:]) / 10
+        avg_scores.append(avg_score)
+        print('Average reward at episode {} is: {}'.format(episode + 1, avg_score))
 
-    print('Episode: {}/{} had total reward: {}.'.format(episode + 1, epochs, G))
 
 print('Training is done after {} episodes'.format(epochs) )
 
+x = np.arange(1,epochs+1,10)
+plt.plot(x, avg_scores)
+plt.xlabel('Episodes')
+plt.ylabel('Average Reward')
+plt.title('Learning Curve')
+plt.show()
 
-path = 'saved_model/Actor_network_DDPG'
+'''path = 'saved_model/Actor_network_DDPG'
 os.makedirs(path)
 actor.save(path)
 
@@ -199,4 +214,4 @@ for episode in range(epochs_test):
         G += reward
 
     print('Episode: {}/{} had total reward: {}.'.format(episode + 1, epochs_test, G))
-env.close()
+env.close()'''

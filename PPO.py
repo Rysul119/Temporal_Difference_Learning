@@ -11,7 +11,7 @@ gamma = 0.99 # discounting factor [0,1]
 lmda = 0.95
 alpha =  0.05 # actor learning rate
 beta = 0.04 # critic learning rate
-batch_size = 60
+epochs = 200
 ppo_steps = 200
 clip_coeff = 0.2
 
@@ -137,8 +137,8 @@ for episode in range(epochs):
         action_prob = actor.predict(state)
         q_value = critic.predict(state)
         action = int(np.random.choice(action_space, 1, p = action_prob[0]))
-        #action_onehot = np.zeros(action_size)
-        #action_onehot[action] = 1
+        action_onehot = np.zeros(action_size)
+        action_onehot[action] = 1
 
         next_state, reward, done, info = env.step(action)
         mask = not done
@@ -149,7 +149,7 @@ for episode in range(epochs):
         values.append(q_value)
         masks.append(mask)
         action_probs.append(action_prob)
-        #action_onehots.append(action_onehot)
+        action_onehots.append(action_onehot)
 
         state = next_state
         state = np.reshape(state, (1, -1))
@@ -168,7 +168,3 @@ for episode in range(epochs):
     print('Total test reward {}'.format(avg_reward))
 
 env.close()
-
-
-
-
