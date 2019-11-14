@@ -7,8 +7,8 @@ import random
 env = gym.make('CartPole-v1')
 
 gamma = 0.9  # discounting factor [0,1]
-epsilon = 0.1  # within [0,1]
-batch_size = 25
+epsilon = 0.3  # within [0,1]
+batch_size = 60
 epochs = 200
 
 memory = deque(maxlen=2000)
