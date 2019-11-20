@@ -81,6 +81,8 @@ class A2CAgent:
 
         returns, advs = self._returns_advantages(rewards, dones, values, next_values)
         # a trick to input actions and advantages through same API
+        print("States shape: {}, Actions shape: {}, Rewards shape: {}, Values shape: {}, dones shape:{}, returns shape: {}, Advantage shape: {}".format(states.shape, actions.shape, rewards.shape,
+                                                                                           values.shape, dones.shape, returns.shape, advs.shape))
         acts_and_advs = np.concatenate([actions[:, None], advs[:, None]], axis=-1)
         # performs a full training step on the collected batch
         # note: no need to mess around with gradients, Keras API handles it
